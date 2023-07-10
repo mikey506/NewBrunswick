@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>New Brunswick Map</title>
+  <style>
+    #map {
+      height: 900px;
+      width: 100%;
+    }
+  </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css" />
+</head>
+<body>
+  <div id="map"></div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"></script>
+  <script>
+    function initMap() {
+      // Create map
+      var map = L.map('map').setView([45.9636, -66.6431], 8);
+
+      // Add OpenStreetMap tile layer
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: 'Map data © <a href="https://openstreetmap.org">OpenStreetMap</a> contributors'
+      }).addTo(map);
+
+      // Markers
+      var markers = [
+        {
+          city: "Fredericton",
+          population: "Approximately 61,100",
+          demographics: "Median age: 39.8 years\nEnglish-speaking population: 92.2%\nFrench-speaking population: 4.8%",
+          industries: "Fredericton's economy is diverse and includes sectors such as education, government, technology, healthcare, and tourism. The city is known as a hub for innovation and research, with a focus on information technology and clean technology.",
+          economicInfo: "Fredericton has experienced steady economic growth over the years, with a strong focus on knowledge-based industries and entrepreneurship. The city is home to several research institutions, including the University of New Brunswick and the National Research Council.",
+          history: "Fredericton, the capital city of New Brunswick, was founded in 1785 and has a rich history. It has grown to become a center for government, education, and culture in the province. The city has seen significant development in recent years, particularly in the technology sector, with the establishment of innovation hubs and the growth of startup companies.",
+          monumentImg: "fredericton_monument.jpg",
+          coordinates: [45.9636, -66.6431] // Coordinates for Fredericton
+        },
+        {
+          city: "Moncton",
+          population: "Approximately 81,700",
+          demographics: "Median age: 41.1 years\nEnglish-speaking population: 74.6%\nFrench-speaking population: 22.1%",
+          industries: "Moncton has a diverse economy with key sectors including transportation and logistics, manufacturing, retail, healthcare, education, and finance. The city serves as a regional commercial and distribution center, with strong ties to the transportation industry.",
+          economicInfo: "Moncton has experienced steady economic growth, fueled by its strategic location, strong transportation infrastructure, and supportive business environment. The city has attracted major companies and organizations, creating job opportunities and driving economic development.",
+          history: "Moncton has a history dating back to the 18th century and has evolved from an agricultural community to a thriving regional center. The city's strategic location along major transportation routes, including the Trans-Canada Highway and railways, has contributed to its development as a transportation and commercial hub.",
+          monumentImg: "moncton_monument.jpg",
+          coordinates: [46.0878, -64.7782] // Coordinates for Moncton
+        },
+        {
+          city: "Saint John",
+          population: "Approximately 67,800",
+          demographics: "Median age: 44.6 years\nEnglish-speaking population: 87.1%\nFrench-speaking population: 6.8%",
+          industries: "Saint John has a diverse economy with key sectors including energy, manufacturing, shipbuilding and repair, transportation and logistics, retail, and healthcare. The city is home to the largest oil refinery in Canada and has a significant port.",
+          economicInfo: "Saint John's economy is heavily influenced by the energy sector, with the Irving Oil refinery being a major employer and economic driver. The city has also seen growth in the manufacturing and technology sectors, as well as the development of a thriving arts and cultural scene.",
+          history: "Saint John, one of the oldest cities in North America, was established in 1785. It has a rich maritime history and has been an important port city throughout its existence. Over the years, Saint John has undergone revitalization efforts, including the development of waterfront areas and the restoration of historic buildings.",
+          monumentImg: "saintjohn_monument.jpg",
+          coordinates: [45.2733, -66.0633] // Coordinates for Saint John
+        },
+    {
+    city: "Bathurst",
+    population: "Approximately 11,172",
+    demographics: "Median age: 45.5 years\nEnglish-speaking population: 64.2%\nFrench-speaking population: 34.8%",
+    industries: "Bathurst's economy is diverse, with key sectors including manufacturing, healthcare, education, retail, and tourism. The city benefits from its location as a regional hub for shopping, healthcare services, and educational institutions.",
+    economicInfo: "Bathurst has a growing economy with a focus on supporting local businesses and attracting investment. The city has seen development in various sectors, including advanced manufacturing and healthcare services.",
+    history: "Bathurst has a rich history as a former mining and industrial center. Over the years, the city has diversified its economy and expanded its service sector to meet the needs of the local population and surrounding communities.",
+    monumentImg: "bathurst_monument.jpg",
+    coordinates: [47.6338, -65.6502] // Coordinates for Bathurst
+  },
+  {
+    city: "Beresford",
+    population: "Approximately 4,647",
+    demographics: "Median age: 49.7 years\nEnglish-speaking population: 79.4%\nFrench-speaking population: 19.9%",
+    industries: "Beresford's economy is primarily based on services, including healthcare, education, retail, and professional services. The municipality also benefits from its proximity to the fishing industry and tourism activities.",
+    economicInfo: "Beresford's economy is focused on supporting local businesses and providing services to the surrounding communities. The municipality plays a role in promoting regional economic development and collaboration.",
+    history: "Beresford is a relatively young municipality, having been established in 1992 through the amalgamation of several communities. It has developed as a residential and service-oriented community, offering essential amenities to residents and visitors.",
+    monumentImg: "beresford_monument.jpg",
+    coordinates: [47.7889, -65.9192] // Coordinates for Beresford
+  },
+  {
+    city: "Bouctouche",
+    population: "Approximately 2,446",
+    demographics: "Median age: 53.1 years\nEnglish-speaking population: 50.4%\nFrench-speaking population: 49.3%",
+    industries: "Bouctouche's economy is diverse, with a focus on tourism, agriculture, fishing, and small businesses. The municipality benefits from its location on the Acadian Coastal Drive, attracting visitors to its natural beauty and cultural heritage.",
+    economicInfo: "Bouctouche's economy is driven by tourism, with the municipality capitalizing on its scenic beaches, nature parks, and cultural attractions. Local businesses play a significant role in providing services to residents and visitors.",
+    history: "Bouctouche has a rich Acadian history and is known for its strong cultural heritage. The municipality has developed as a tourist destination, offering visitors opportunities to explore the coastline, enjoy outdoor activities, and learn about Acadian traditions.",
+    monumentImg: "bouctouche_monument.jpg",
+    coordinates: [46.4725, -64.7102] // Coordinates for Bouctouche
+  },
+  {
+    city: "Campbellton",
+    population: "Approximately 6,554",
+    demographics: "Median age: 50.2 years\nEnglish-speaking population: 65.1%\nFrench-speaking population: 33.4%",
+    industries: "Campbellton's economy is diverse, with key sectors including healthcare, education, retail, tourism, and transportation. The municipality benefits from its location as a transportation hub and service center for the surrounding region.",
+    economicInfo: "Campbellton's economy is anchored by healthcare and educational institutions, which provide employment opportunities and support the local economy. The municipality also attracts tourists with its natural beauty and recreational opportunities.",
+    history: "Campbellton has a long history as a transportation and trade center, serving as a gateway between New Brunswick and Quebec. Over time, the municipality has evolved to provide a range of services to residents and visitors, including healthcare, education, and recreational activities.",
+    monumentImg: "campbellton_monument.jpg",
+    coordinates: [48.0069, -66.6721] // Coordinates for Campbellton
+  },
+  {
+    city: "Caraquet",
+    population: "Approximately 3,890",
+    demographics: "Median age: 51.4 years\nEnglish-speaking population: 22.3%\nFrench-speaking population: 77.4%",
+    industries: "Caraquet's economy is driven by fishing, aquaculture, agriculture, tourism, and the arts. The municipality is known for its Acadian heritage and cultural events.",
+    economicInfo: "Caraquet's economy is closely tied to the fishing industry, with the municipality being one of the largest fishing ports in the region. The arts and cultural sector also contribute to the local economy through festivals, museums, and artisanal crafts.",
+    history: "Caraquet has a strong Acadian identity and has preserved its cultural heritage through various initiatives. The municipality has developed as a cultural and tourist destination, attracting visitors with its Acadian history, seafood cuisine, and vibrant festivals.",
+    monumentImg: "caraquet_monument.jpg",
+    coordinates: [47.7904, -64.9556] // Coordinates for Caraquet
+  },
+  {
+    city: "Dalhousie",
+    population: "Approximately 3,148",
+    demographics: "Median age: 48.7 years\nEnglish-speaking population: 86.9%\nFrench-speaking population: 11.8%",
+    industries: "Dalhousie's economy is primarily based on manufacturing, healthcare, education, and services related to the forestry and fishing industries.",
+    economicInfo: "Dalhousie has faced economic challenges in recent years, particularly due to the decline of the local pulp and paper mill. Efforts have been made to diversify the economy and attract new industries to the area.",
+    history: "Dalhousie has a history tied to the forestry and fishing industries, which have played a significant role in its development. The municipality has been working on revitalization efforts to adapt to changing economic conditions and explore new opportunities for growth.",
+    monumentImg: "dalhousie_monument.jpg",
+    coordinates: [48.0654, -66.3807] // Coordinates for Dalhousie
+  },
+ {
+    city: "Florenceville-Bristol",
+    population: "Approximately 1,598",
+    demographics: "Median age: 51.2 years\nEnglish-speaking population: 97.6%\nFrench-speaking population: 1.9%",
+    industries: "Florenceville-Bristol is known as the 'French Fry Capital of the World' due to the presence of major potato processing companies. Agriculture, agri-food, and related industries play a significant role in the local economy.",
+    economicInfo: "The municipality's economy is centered around the potato industry, with major employers including McCain Foods and other food processing companies. The agri-food sector, manufacturing, and small businesses also contribute to the local economy.",
+    history: "Florenceville-Bristol's history is closely tied to agriculture, particularly potato farming. The establishment of potato processing plants in the area has led to economic growth and made the municipality a key player in the global potato industry.",
+    monumentImg: "florenceville_bristol_monument.jpg",
+    coordinates: [46.4428, -67.6316] // Coordinates for Florenceville-Bristol
+  },
+  {
+    city: "Grand Bay-Westfield",
+    population: "Approximately 5,252",
+    demographics: "Median age: 46.5 years\nEnglish-speaking population: 96.9%\nFrench-speaking population: 2.3%",
+    industries: "Grand Bay-Westfield's economy is diverse, with a focus on retail, healthcare, education, and professional services. The municipality benefits from its location along the Saint John River and proximity to the city of Saint John.",
+    economicInfo: "The local economy is driven by a range of businesses, including retail stores, healthcare facilities, and educational institutions. Grand Bay-Westfield offers a mix of residential, commercial, and recreational opportunities for residents and visitors.",
+    history: "Grand Bay-Westfield has a history tied to the shipbuilding and lumber industries. Over time, it has transformed into a residential community with access to various amenities and services, serving as a bedroom community for the nearby city of Saint John.",
+    monumentImg: "grand_bay_westfield_monument.jpg",
+    coordinates: [45.3953, -66.1862] // Coordinates for Grand Bay-Westfield
+  },
+  {
+    city: "Grand Falls",
+    population: "Approximately 5,429",
+    demographics: "Median age: 49.6 years\nEnglish-speaking population: 68.8%\nFrench-speaking population: 30.2%",
+    industries: "Grand Falls has a diverse economy with key sectors including manufacturing, healthcare, retail, and services. The municipality benefits from its central location in the Saint John River Valley.",
+    economicInfo: "Grand Falls is home to several manufacturing companies, including Twin Rivers Paper, which is a major employer in the area. The healthcare sector and retail establishments also contribute to the local economy.",
+    history: "Grand Falls has a history tied to the pulp and paper industry, with the construction of a pulp mill in the early 1900s leading to the development of the town. While the mill has faced challenges in recent years, efforts have been made to diversify the local economy and attract new industries.",
+    monumentImg: "grand_falls_monument.jpg",
+    coordinates: [47.0461, -67.7527] // Coordinates for Grand Falls
+  },
+  {
+    city: "Hampton",
+    population: "Approximately 5,307",
+    demographics: "Median age: 45.2 years\nEnglish-speaking population: 97.8%\nFrench-speaking population: 1.1%",
+    industries: "Hampton's economy is diverse, with a focus on retail, agriculture, manufacturing, healthcare, and professional services. The municipality benefits from its location along the Kennebecasis River.",
+    economicInfo: "Hampton has a thriving business community, with a range of retail stores, restaurants, and professional services. Agriculture, particularly blueberry farming, is another important sector in the area.",
+    history: "Hampton has a history tied to shipbuilding and lumber industries. Over time, it has transformed into a community with a mix of residential, commercial, and agricultural activities. The town attracts visitors with its historic sites, natural beauty, and recreational opportunities.",
+    monumentImg: "hampton_monument.jpg",
+    coordinates: [45.5321, -65.8249] // Coordinates for Hampton
+  },
+  {
+    city: "Hartland",
+    population: "Approximately 947",
+    demographics: "Median age: 53.3 years\nEnglish-speaking population: 99.7%\nFrench-speaking population: 0.3%",
+    industries: "Hartland's economy is primarily based on manufacturing, agriculture, retail, and services. The municipality is known for the Hartland Covered Bridge, the longest covered bridge in the world.",
+    economicInfo: "The local economy is supported by a range of businesses, including manufacturing companies, agricultural operations, and small retail establishments. The tourism sector also benefits from visitors who come to see the famous covered bridge.",
+    history: "Hartland has a history tied to the lumber industry, with the construction of the covered bridge in 1901 playing a significant role in the town's development. Today, the covered bridge is a popular tourist attraction, drawing visitors from around the world.",
+    monumentImg: "hartland_monument.jpg",
+    coordinates: [46.2935, -67.5029] // Coordinates for Hartland
+  },
+  {
+    city: "Lamèque",
+    population: "Approximately 1,448",
+    demographics: "Median age: 48.3 years\nEnglish-speaking population: 18.1%\nFrench-speaking population: 81.2%",
+    industries: "Lamèque's economy is primarily based on fishing, aquaculture, and tourism. The municipality benefits from its location on the Acadian Peninsula and proximity to the Gulf of St. Lawrence.",
+    economicInfo: "Fishing, particularly for lobster and snow crab, is a key economic activity in Lamèque. The aquaculture sector, including the cultivation of mussels and oysters, also contributes to the local economy. Tourism plays a role during the summer months, attracting visitors to the area's scenic beauty and cultural attractions.",
+    history: "Lamèque has a rich Acadian heritage and is known for its traditional fishing communities. Over the years, the fishing industry has played a central role in the development and identity of the municipality.",
+    monumentImg: "lameque_monument.jpg",
+    coordinates: [47.7859, -64.7556] // Coordinates for Lamèque
+  },
+  {
+    city: "Oromocto",
+    population: "Approximately 10,263",
+    demographics: "Median age: 34.7 years\nEnglish-speaking population: 87.4%\nFrench-speaking population: 10.3%",
+    industries: "Oromocto's economy is diverse, with a focus on military and defense-related activities, retail, healthcare, education, and services. The municipality is home to CFB Gagetown, one of the largest military bases in Canada.",
+    economicInfo: "CFB Gagetown is a major employer in Oromocto, contributing to the local economy through military operations and related industries. The town also benefits from retail establishments, healthcare services, and educational institutions.",
+    history: "Oromocto's history is closely tied to the establishment of CFB Gagetown in the 1950s. The military base has had a significant impact on the local economy and has attracted residents from various parts of Canada and around the world.",
+    monumentImg: "oromocto_monument.jpg",
+    coordinates: [45.8364, -66.4708] // Coordinates for Oromocto
+  },
+  {
+    city: "Quispamsis",
+    population: "Approximately 21,798",
+    demographics: "Median age: 39.9 years\nEnglish-speaking population: 94.7%\nFrench-speaking population: 4.1%",
+    industries: "Quispamsis has a diverse economy, with a focus on professional services, healthcare, retail, education, and construction. The municipality benefits from its location along the Kennebecasis River and proximity to the city of Saint John.",
+    economicInfo: "Quispamsis offers a range of services to its residents and surrounding communities, including healthcare facilities, educational institutions, and retail establishments. Professional services and construction-related activities also contribute to the local economy.",
+    history: "Quispamsis has experienced significant residential and commercial growth over the years, attracting families and professionals seeking a suburban lifestyle with access to amenities and natural surroundings. The municipality continues to develop its infrastructure and services to accommodate the growing population.",
+    monumentImg: "quispamsis_monument.jpg",
+    coordinates: [45.4345, -65.9494] // Coordinates for Quispamsis
+  },
+  {
+    city: "Richibucto",
+    population: "Approximately 1,903",
+    demographics: "Median age: 51.3 years\nEnglish-speaking population: 93.6%\nFrench-speaking population: 5.9%",
+    industries: "Richibucto's economy is primarily based on fishing, agriculture, forestry, and tourism. The municipality benefits from its location along the Northumberland Strait and proximity to Kouchibouguac National Park.",
+    economicInfo: "Fishing, particularly for lobster and groundfish, is a significant economic activity in Richibucto. Agriculture, including blueberry farming, and forestry-related activities also contribute to the local economy. Tourism plays a role during the summer months, with visitors attracted to the area's beaches and natural attractions.",
+    history: "Richibucto has a history tied to fishing and shipbuilding. The town has evolved over time and now offers a mix of residential, commercial, and recreational opportunities for residents and visitors.",
+    monumentImg: "richibucto_monument.jpg",
+    coordinates: [46.6619, -64.8727] // Coordinates for Richibucto
+  },
+  {
+    city: "Riverview",
+    population: "Approximately 19,128",
+    demographics: "Median age: 44.6 years\nEnglish-speaking population: 93.9%\nFrench-speaking population: 4.3%",
+    industries: "Riverview's economy is diverse, with a focus on professional services, healthcare, retail, manufacturing, and construction. The municipality benefits from its location across the Petitcodiac River from the city of Moncton.",
+    economicInfo: "Riverview has a strong business community, with a range of professional services, retail establishments, and healthcare facilities. The manufacturing sector and construction industry also contribute to the local economy.",
+    history: "Riverview has experienced significant residential and commercial growth over the years, attracting families and businesses looking for a suburban setting close to Moncton. The town continues to develop its infrastructure, amenities, and recreational facilities to meet the needs of its growing population.",
+    monumentImg: "riverview_monument.jpg",
+    coordinates: [46.0592, -64.8086] // Coordinates for Riverview
+  },
+  {
+    city: "Rothesay",
+    population: "Approximately 13,691",
+    demographics: "Median age: 46.8 years\nEnglish-speaking population: 94.8%\nFrench-speaking population: 3.2%",
+    industries: "Rothesay's economy is diverse, with a focus on professional services, healthcare, education, retail, and recreation. The municipality benefits from its location on the Kennebecasis River and proximity to the city of Saint John.",
+    economicInfo: "Rothesay offers a range of professional services, healthcare facilities, educational institutions, and retail establishments. The town's natural beauty, parks, and recreational amenities also contribute to the local economy.",
+    history: "Rothesay has a history tied to shipbuilding and summer residences for affluent families. Over time, it has transformed into a residential community known for its beautiful properties, quality of life, and access to recreational opportunities.",
+    monumentImg: "rothesay_monument.jpg",
+    coordinates: [45.3964, -65.9819] // Coordinates for Rothesay
+  },
+  {
+    city: "Sackville",
+    population: "Approximately 5,181",
+    demographics: "Median age: 38.4 years\nEnglish-speaking population: 83.4%\nFrench-speaking population: 13.4%",
+    industries: "Sackville's economy is diverse, with a focus on education, arts and culture, tourism, retail, and services. The municipality is home to Mount Allison University and benefits from its location near the Tantramar Marshes.",
+    economicInfo: "Mount Allison University is a major employer in Sackville, contributing to the local economy through education and research-related activities. The town also benefits from retail establishments, services, and the tourism sector, which attracts visitors to its cultural and natural attractions.",
+    history: "Sackville has a rich history, dating back to its establishment as a farming community in the late 18th century. The presence of Mount Allison University, founded in 1839, has had a significant impact on the town's development and character. Today, Sackville is known for its vibrant arts and culture scene, historic sites, and natural beauty.",
+    monumentImg: "sackville_monument.jpg",
+    coordinates: [45.9033, -64.3686] // Coordinates for Sackville
+  },
+       {
+          city: "Sussex",
+          population: "Approximately 4,093",
+          demographics: "Median age: 46.4 years\nEnglish-speaking population: 92.5%\nFrench-speaking population: 4.9%",
+          industries: "Sussex has a diverse economy with a focus on agriculture, manufacturing, forestry, retail, and services. The town is known for its agricultural products, including blueberries and potatoes.",
+          economicInfo: "Sussex is an important agricultural center, with a significant production of blueberries and potatoes. The town also benefits from manufacturing companies, forestry resources, retail establishments, and service providers.",
+          history: "Sussex was initially settled in the early 19th century and grew as a farming and lumbering community. Over time, the town diversified its economy and became an important hub for agriculture, manufacturing, and other industries.",
+          monumentImg: "sussex_monument.jpg",
+          coordinates: [45.7252, -65.5116] // Coordinates for Sussex
+        },
+        {
+          city: "Tracadie",
+          population: "Approximately 4,290",
+          demographics: "Median age: 44.6 years\nEnglish-speaking population: 36.6%\nFrench-speaking population: 62.9%",
+          industries: "Tracadie's economy is diverse, with a focus on healthcare, education, public administration, retail, and services. The town is a regional center for healthcare and education.",
+          economicInfo: "Tracadie benefits from the presence of healthcare facilities, including a regional hospital and medical clinics. The town's economy also relies on educational institutions, public administration services, retail establishments, and service providers.",
+          history: "Tracadie has a rich Acadian heritage and a history rooted in agriculture, fishing, and forestry. Over the years, the town has developed as a regional center for healthcare and education, providing services to the surrounding communities.",
+          monumentImg: "tracadie_monument.jpg",
+          coordinates: [47.5257, -64.9155] // Coordinates for Tracadie
+        },
+        {
+          city: "Woodstock",
+          population: "Approximately 5,100",
+          demographics: "Median age: 45.8 years\nEnglish-speaking population: 96.4%\nFrench-speaking population: 1.5%",
+          industries: "Woodstock's economy is diverse, with a focus on manufacturing, retail, healthcare, education, and services. The town is known for its manufacturing sector and retail establishments.",
+          economicInfo: "Woodstock has a strong manufacturing sector, with several companies operating in fields such as automotive parts, plastics, and food processing. The town also benefits from retail establishments, healthcare services, educational institutions, and service providers.",
+          history: "Woodstock has a long history as a trading and industrial center, dating back to the early 19th century. The town's economy has evolved over time, with manufacturing becoming a key sector. Woodstock is now a thriving community with a mix of industries and amenities.",
+          monumentImg: "woodstock_monument.jpg",
+          coordinates: [46.1507, -67.5808] // Coordinates for Woodstock
+        },
+        {
+          city: "Alma",
+          population: "Approximately 230",
+          demographics: "Median age: 56.7 years\nEnglish-speaking population: 94.4%\nFrench-speaking population: 4.4%",
+          industries: "Alma's economy is primarily driven by tourism, hospitality, and outdoor recreation. The village is located near Fundy National Park and the Bay of Fundy, attracting visitors with its natural beauty and outdoor activities.",
+          economicInfo: "Tourism plays a significant role in Alma's economy, with visitors drawn to the stunning coastline, hiking trails, and the unique tidal phenomena of the Bay of Fundy. The village has accommodations, restaurants, and recreational services catering to tourists.",
+          history: "Alma has a history tied to the shipbuilding industry and was once a bustling port. Over time, it has transformed into a tourist destination, serving as a gateway to Fundy National Park and the natural wonders of the Bay of Fundy.",
+          monumentImg: "alma_monument.jpg",
+          coordinates: [45.6171, -64.9869] // Coordinates for Alma
+        },
+        {
+          city: "Atholville",
+          population: "Approximately 1,237",
+          demographics: "Median age: 48.8 years\nEnglish-speaking population: 67.1%\nFrench-speaking population: 32.6%",
+          industries: "Atholville's economy is diverse, with a focus on manufacturing, forestry, transportation, and services. The village is home to major industrial facilities and transportation infrastructure.",
+          economicInfo: "Atholville benefits from its industrial sector, which includes a major pulp mill, a thermal power plant, and transportation infrastructure such as a railway and highways. The village also has retail establishments, service providers, and forestry-related activities.",
+          history: "Atholville developed around the pulp and paper industry in the mid-20th century. The industrial facilities brought growth and employment to the area, shaping the village's economy and development.",
+          monumentImg: "atholville_monument.jpg",
+          coordinates: [47.9901, -66.6858] // Coordinates for Atholville
+        },
+  {
+    city: "Belledune",
+    population: "Approximately 1,358",
+    demographics: "Median age: 48.3 years\nEnglish-speaking population: 69.3%\nFrench-speaking population: 28.1%",
+    industries: "Belledune's economy is primarily driven by the Port of Belledune, which serves as a major industrial and transportation hub for the region. The port supports various industries, including manufacturing, mining, forestry, and energy.",
+    economicInfo: "The Port of Belledune is a key economic driver, facilitating the shipment of goods and resources. The municipality also benefits from the presence of industrial facilities, including a thermal power plant and manufacturing operations. Additionally, forestry and mining activities contribute to the local economy.",
+    history: "The development of the Port of Belledune in the 1960s transformed the community into an industrial center. The port's strategic location and infrastructure have attracted investments and contributed to the municipality's economic growth.",
+    monumentImg: "belledune_monument.jpg",
+    coordinates: [47.9602, -65.8272] // Coordinates for Belledune
+  },
+  {
+    city: "Blacks Harbour",
+    population: "Approximately 962",
+    demographics: "Median age: 45.2 years\nEnglish-speaking population: 89.8%\nFrench-speaking population: 8.2%",
+    industries: "Blacks Harbour has a strong economic base in the fishing and seafood processing industry. It is known for its role in the aquaculture sector, particularly the production of farmed Atlantic salmon.",
+    economicInfo: "The fishing and seafood processing industry is the primary driver of the local economy in Blacks Harbour. The community is home to several seafood processing plants, which employ a significant portion of the population. The aquaculture sector, including salmon farming, plays a crucial role in the municipality's economic activity.",
+    history: "Blacks Harbour has a long history in the fishing industry, dating back to the early 20th century. Over the years, it has become a key location for seafood processing and aquaculture, contributing to the local economy and employment opportunities.",
+    monumentImg: "blacks_harbour_monument.jpg",
+    coordinates: [45.0461, -66.7781] // Coordinates for Blacks Harbour
+  },
+  {
+    city: "Canterbury",
+    population: "Approximately 2,439",
+    demographics: "Median age: 45.9 years\nEnglish-speaking population: 93.5%\nFrench-speaking population: 5.6%",
+    industries: "Canterbury's economy is primarily based on agriculture, with a focus on dairy farming, beef production, and crop cultivation. The community is known for its agricultural products and rural lifestyle.",
+    economicInfo: "Agriculture is the mainstay of Canterbury's economy, with dairy farming and beef production being prominent sectors. The community benefits from fertile farmland and a strong agricultural heritage. Additionally, there are retail establishments and service providers that cater to the local population.",
+    history: "Canterbury has a history rooted in agriculture and farming. The fertile soils and favorable climate have supported a vibrant farming community. Agriculture remains a vital part of the local economy, contributing to the community's identity and prosperity.",
+    monumentImg: "canterbury_monument.jpg",
+    coordinates: [46.2206, -67.6278] // Coordinates for Canterbury
+  },
+  {
+    city: "Doaktown",
+    population: "Approximately 705",
+    demographics: "Median age: 48.1 years\nEnglish-speaking population: 94.7%\nFrench-speaking population: 3.7%",
+    industries: "Doaktown's economy is primarily driven by the forestry industry, with a focus on lumber production, sawmills, and related activities. The community is located in a forested area with access to timber resources.",
+    economicInfo: "Forestry is the main economic driver in Doaktown, with several sawmills and lumber-related businesses operating in the area. The community benefits from the availability of timber resources and the employment opportunities provided by the forestry sector. Additionally, there are retail establishments and service providers that support the local population.",
+    history: "Doaktown has a long history tied to the forestry industry, which has played a crucial role in the community's development. The availability of timber resources and the establishment of sawmills have contributed to the local economy and provided employment opportunities for residents.",
+    monumentImg: "doaktown_monument.jpg",
+    coordinates: [46.5369, -66.0533] // Coordinates for Doaktown
+  },
+  {
+    city: "Dorchester",
+    population: "Approximately 1,060",
+    demographics: "Median age: 48.9 years\nEnglish-speaking population: 94.6%\nFrench-speaking population: 3.3%",
+    industries: "Dorchester's economy is diverse, with a focus on agriculture, tourism, retail, and services. The community is known for its agricultural products, historic sites, and cultural attractions.",
+    economicInfo: "Agriculture plays a significant role in Dorchester's economy, with farms producing a variety of crops and livestock. The community also benefits from tourism, with attractions such as the historic Dorchester Penitentiary and the Keillor House Museum drawing visitors. Additionally, there are retail establishments and service providers that cater to the local population and tourists.",
+    history: "Dorchester has a rich history dating back to the 18th century. The community was a prominent shipbuilding center and later became known for its agricultural activities. Today, Dorchester is a mix of historical charm, agricultural pursuits, and tourism, contributing to its economic and cultural vibrancy.",
+    monumentImg: "dorchester_monument.jpg",
+    coordinates: [45.9191, -64.5253] // Coordinates for Dorchester
+  },
+  {
+    city: "Edmundston",
+    population: "Approximately 15,223",
+    demographics: "Median age: 45.3 years\nEnglish-speaking population: 18.3%\nFrench-speaking population: 79.6%",
+    industries: "Edmundston has a diverse economy with a focus on manufacturing, healthcare, education, and retail. The community is known for its pulp and paper industry, as well as the services sector.",
+    economicInfo: "The manufacturing sector, particularly pulp and paper production, is a significant economic driver in Edmundston. The community is home to several industrial facilities that contribute to employment and economic activity. Additionally, healthcare, education, and retail services are important contributors to the local economy.",
+    history: "Edmundston has a history rooted in the lumber industry, with the development of sawmills and pulp mills driving its early growth. Over the years, the community diversified its economy and became a regional hub for services and industry.",
+    monumentImg: "edmundston_monument.jpg",
+    coordinates: [47.3736, -68.3257] // Coordinates for Edmundston
+  },
+  {
+    city: "Florenceville",
+    population: "Approximately 715",
+    demographics: "Median age: 47.3 years\nEnglish-speaking population: 92.2%\nFrench-speaking population: 6.3%",
+    industries: "Florenceville's economy is primarily based on agriculture, with a focus on potato farming and processing. The community is known as the 'French Fry Capital of the World' due to its association with the McCain Foods Limited potato processing plant.",
+    economicInfo: "Agriculture, specifically potato farming and processing, is the main economic driver in Florenceville. The McCain Foods Limited plant in the community is a major employer and contributes to the local economy. Additionally, there are retail establishments and service providers that support the local population.",
+    history: "Florenceville's economy has revolved around the potato industry since the mid-20th century when the McCain Foods Limited plant was established. The community's association with potato farming and processing has shaped its identity and played a significant role in its development.",
+    monumentImg: "florenceville_monument.jpg",
+    coordinates: [46.4406, -67.6187] // Coordinates for Florenceville
+  },
+  {
+    city: "Gagetown",
+    population: "Approximately 698",
+    demographics: "Median age: 49.7 years\nEnglish-speaking population: 92.8%\nFrench-speaking population: 4.2%",
+    industries: "Gagetown's economy is predominantly based on agriculture, tourism, and recreational activities. The community is known for its agricultural products, historical sites, and natural beauty.",
+    economicInfo: "Agriculture plays a significant role in Gagetown's economy, with farms producing various crops and livestock. The community benefits from its historical significance, attracting tourists interested in its historic sites and cultural heritage. Additionally, recreational activities such as boating, fishing, and camping contribute to the local economy.",
+    history: "Gagetown has a rich history dating back to the Loyalist settlement in the late 18th century. The community's historical sites, including the Historic Gagetown Village, Fort Hughes, and the Queens County Court House, are important landmarks. Today, Gagetown's economy thrives on its agricultural resources and tourism offerings.",
+    monumentImg: "gagetown_monument.jpg",
+    coordinates: [45.8242, -66.2389] // Coordinates for Gagetown
+  },
+  {
+    city: "Grand Manan",
+    population: "Approximately 2,390",
+    demographics: "Median age: 53.1 years\nEnglish-speaking population: 97.7%\nFrench-speaking population: 1.1%",
+    industries: "Grand Manan's economy is primarily based on fishing, aquaculture, tourism, and related services. The community is known for its fishing heritage, seafood industry, and natural beauty.",
+    economicInfo: "Fishing and aquaculture activities are the backbone of Grand Manan's economy. Lobster fishing, scallop harvesting, and aquaculture operations, particularly for Atlantic salmon and shellfish, contribute to employment and economic activity. Tourism also plays a significant role, with visitors attracted to the island's scenic landscapes, wildlife, and coastal charm.",
+    history: "Grand Manan has a long history tied to fishing and maritime activities. The community's strategic location and abundant fishing grounds have made it a vital fishing center. Today, Grand Manan maintains its fishing traditions while embracing tourism as an important economic sector.",
+    monumentImg: "grand_manan_monument.jpg",
+    coordinates: [44.7319, -66.7824] // Coordinates for Grand Manan
+  },
+  {
+    city: "Harvey",
+    population: "Approximately 1,356",
+    demographics: "Median age: 46.7 years\nEnglish-speaking population: 98.1%\nFrench-speaking population: 1.5%",
+    industries: "Harvey's economy is diverse, with a focus on agriculture, forestry, tourism, and small-scale manufacturing. The community is known for its agricultural products, natural beauty, and recreational activities.",
+    economicInfo: "Agriculture, including crop farming and livestock production, is an important sector in Harvey's economy. The community also benefits from its proximity to forested areas, supporting the forestry industry. Tourism is another significant contributor, with visitors attracted to the area's lakes, outdoor activities, and rural charm.",
+    history: "Harvey has a history rooted in agriculture and the lumber industry. Over the years, the community has diversified its economy and embraced tourism as a key sector. Its rural character, natural attractions, and welcoming community make it a desirable place to live and visit.",
+    monumentImg: "harvey_monument.jpg",
+    coordinates: [45.8005, -66.9528] // Coordinates for Harvey
+  },
+  {
+    city: "Hillsborough",
+    population: "Approximately 1,380",
+    demographics: "Median age: 44.1 years\nEnglish-speaking population: 93.8%\nFrench-speaking population: 5.6%",
+    industries: "Hillsborough's economy is primarily based on agriculture, forestry, and small-scale manufacturing. The community is known for its agricultural products, timber resources, and local businesses.",
+    economicInfo: "Agriculture, including crop farming and livestock production, is an important sector in Hillsborough's economy. The community benefits from its proximity to forested areas, supporting the forestry industry. Local businesses and small-scale manufacturing operations also contribute to the local economy.",
+    history: "Hillsborough has a history rooted in agriculture and the timber industry. The community's fertile lands have supported farming activities, while its proximity to timber resources has driven the development of sawmills and related businesses. Today, Hillsborough retains its rural character while embracing a mix of agricultural and manufacturing activities.",
+    monumentImg: "hillsborough_monument.jpg",
+    coordinates: [45.9189, -64.6471] // Coordinates for Hillsborough
+  },
+  {
+    city: "Minto",
+    population: "Approximately 2,450",
+    demographics: "Median age: 48.2 years\nEnglish-speaking population: 94.4%\nFrench-speaking population: 3.5%",
+    industries: "Minto's economy is diverse, with a focus on manufacturing, forestry, agriculture, and small businesses. The community is known for its industrial activities, timber resources, and agricultural products.",
+    economicInfo: "Manufacturing plays a significant role in Minto's economy, with several industrial facilities operating in the area. The forestry sector benefits from the region's timber resources, supporting employment and economic activity. Agriculture, small businesses, and services also contribute to the local economy.",
+    history: "Minto has a history linked to the lumber industry and the development of manufacturing facilities. The community's timber resources have supported the growth of sawmills and other wood processing operations. Today, Minto's economy reflects a mix of industrial, agricultural, and service-based activities.",
+    monumentImg: "minto_monument.jpg",
+    coordinates: [45.8206, -66.1584] // Coordinates for Minto
+  },
+  {
+    city: "Nackawic",
+    population: "Approximately 980",
+    demographics: "Median age: 52.3 years\nEnglish-speaking population: 97.1%\nFrench-speaking population: 2.7%",
+    industries: "Nackawic's economy is centered around the pulp and paper industry, forestry, and related services. The community is known for its pulp mill, timber resources, and supportive businesses.",
+    economicInfo: "The pulp and paper industry, with the J.D. Irving Limited pulp mill as a key employer, is the primary economic driver in Nackawic. The community benefits from its proximity to forested areas, which provide a sustainable source of timber for the mill. Supportive services and businesses related to the industry also contribute to the local economy.",
+    history: "Nackawic's history is intertwined with the establishment of the pulp mill in the mid-20th century. The community was planned and developed to support the mill's operations. Over the years, Nackawic has evolved into a thriving community centered around the pulp and paper industry.",
+    monumentImg: "nackawic_monument.jpg",
+    coordinates: [45.9922, -67.2286] // Coordinates for Nackawic
+  },
+  {
+    city: "Neguac",
+    population: "Approximately 1,730",
+    demographics: "Median age: 53.6 years\nEnglish-speaking population: 44.1%\nFrench-speaking population: 55.7%",
+    industries: "Neguac's economy is primarily based on fishing, aquaculture, agriculture, and small businesses. The community is known for its fishing heritage, seafood industry, and agricultural products.",
+    economicInfo: "Fishing and aquaculture activities are the backbone of Neguac's economy. The community's fishing fleet and seafood processing facilities contribute to employment and economic activity. Agriculture, including crop farming and livestock production, as well as small businesses, also play a role in the local economy.",
+    history: "Neguac has a history tied to fishing and maritime activities. The community's strategic location on the Acadian Peninsula has made it a vital fishing center. Today, Neguac maintains its fishing traditions while diversifying its economy to include agriculture and small businesses.",
+    monumentImg: "neguac_monument.jpg",
+    coordinates: [47.3204, -65.0168] // Coordinates for Neguac
+  },
+  {
+  city: "Norton",
+  population: "Approximately 1,230",
+  demographics: "Median age: 48.2 years\nEnglish-speaking population: 97.4%\nFrench-speaking population: 2.0%",
+  industries: "Norton's economy is diverse, with a focus on agriculture, forestry, small-scale manufacturing, and services. The community is known for its agricultural products, timber resources, and local businesses.",
+  economicInfo: "Agriculture, including crop farming and livestock production, is an important sector in Norton's economy. The community benefits from its proximity to forested areas, supporting the forestry industry. Local businesses, small-scale manufacturing operations, and services also contribute to the local economy.",
+  history: "Norton has a history rooted in agriculture and the timber industry. The community's fertile lands have supported farming activities, while its proximity to timber resources has driven the development of sawmills and related businesses. Today, Norton retains its rural character while embracing a mix of agricultural and manufacturing activities.",
+  monumentImg: "norton_monument.jpg",
+  coordinates: [45.8846, -65.7937] // Coordinates for Norton
+  },
+{
+  city: "Perth-Andover",
+  population: "Approximately 1,665",
+  demographics: "Median age: 45.9 years\nEnglish-speaking population: 99.0%\nFrench-speaking population: 0.5%",
+  industries: "Perth-Andover's economy is diverse, with a focus on agriculture, forestry, manufacturing, and services. The community is known for its agricultural products, timber resources, and local businesses.",
+  economicInfo: "Agriculture plays a significant role in Perth-Andover's economy, with crop farming and livestock production being key sectors. The community also benefits from its proximity to forested areas, supporting the forestry industry. Manufacturing and services, including healthcare and education, also contribute to the local economy.",
+  history: "Perth-Andover has a history rooted in agriculture and the timber industry. The community's fertile lands have supported farming activities, while its proximity to timber resources has driven the development of sawmills and related businesses. Over time, Perth-Andover has diversified its economy to include manufacturing and services.",
+  monumentImg: "perth-andover_monument.jpg",
+  coordinates: [46.7415, -67.6914] // Coordinates for Perth-Andover
+},
+{
+  city: "Petitcodiac",
+  population: "Approximately 1,460",
+  demographics: "Median age: 44.2 years\nEnglish-speaking population: 92.7%\nFrench-speaking population: 6.9%",
+  industries: "Petitcodiac's economy is diverse, with a focus on agriculture, manufacturing, and services. The community is known for its agricultural products, local businesses, and tourism potential.",
+  economicInfo: "Agriculture, including crop farming and livestock production, is an important sector in Petitcodiac's economy. The community benefits from its fertile lands and agricultural resources. Manufacturing and services, including retail, healthcare, and education, also contribute to the local economy.",
+  history: "Petitcodiac has a history linked to agriculture and its strategic location along the Petitcodiac River. The community's fertile lands have supported farming activities, while its proximity to transportation routes has facilitated trade and commerce. Today, Petitcodiac continues to embrace its agricultural heritage while exploring new economic opportunities.",
+  monumentImg: "petitcodiac_monument.jpg",
+  coordinates: [45.9356, -65.2209] // Coordinates for Petitcodiac
+},
+{
+  city: "Plaster Rock",
+  population: "Approximately 1,080",
+  demographics: "Median age: 46.6 years\nEnglish-speaking population: 98.6%\nFrench-speaking population: 1.1%",
+  industries: "Plaster Rock's economy is primarily based on forestry, manufacturing, and services. The community is known for its timber resources, industrial facilities, and supportive businesses.",
+  economicInfo: "The forestry sector plays a crucial role in Plaster Rock's economy, with the community benefiting from its access to timber resources. Sawmills and related wood processing operations contribute to employment and economic activity. Manufacturing and services, including healthcare and retail, also play a role in the local economy.",
+  history: "Plaster Rock's history is closely tied to the timber industry. The community developed around the operation of a gypsum mine, which provided the name 'Plaster Rock.' Over time, the focus shifted to forestry, and the community became known for its sawmills and wood processing activities.",
+  monumentImg: "plaster-rock_monument.jpg",
+  coordinates: [46.9483, -67.2494] // Coordinates for Plaster Rock
+},
+{
+  city: "Rexton",
+  population: "Approximately 1,710",
+  demographics: "Median age: 43.2 years\nEnglish-speaking population: 92.7%\nFrench-speaking population: 6.7%",
+  industries: "Rexton's economy is diverse, with a focus on agriculture, forestry, manufacturing, and services. The community is known for its agricultural products, timber resources, and local businesses.",
+  economicInfo: "Agriculture, including crop farming and livestock production, is an important sector in Rexton's economy. The community benefits from its fertile lands and agricultural resources. The forestry industry, with its timber resources, supports employment and economic activity. Manufacturing and services, including healthcare and retail, also contribute to the local economy.",
+  history: "Rexton has a history rooted in agriculture and the timber industry. The community's fertile lands have supported farming activities, while its proximity to timber resources has driven the development of sawmills and related businesses. Over time, Rexton has diversified its economy to include manufacturing and services.",
+  monumentImg: "rexton_monument.jpg",
+  coordinates: [46.6555, -64.8832] // Coordinates for Rexton
+},
+{
+  city: "Richibucto",
+  population: "Approximately 1,700",
+  demographics: "Median age: 51.9 years\nEnglish-speaking population: 86.6%\nFrench-speaking population: 13.1%",
+  industries: "Richibucto's economy is diverse, with a focus on fishing, aquaculture, agriculture, manufacturing, and services. The community is known for its fishing heritage, seafood industry, agricultural products, and local businesses.",
+  economicInfo: "Fishing and aquaculture activities are central to Richibucto's economy. The community's fishing fleet and seafood processing facilities contribute to employment and economic activity. Agriculture, including crop farming and livestock production, also plays a role in the local economy. Manufacturing and services, including healthcare and retail, further contribute to economic diversity.",
+  history: "Richibucto has a history deeply connected to fishing and maritime activities. The community's strategic location on the coast has made it a vital fishing center. Over time, Richibucto has expanded its economic base to include agriculture, manufacturing, and services, while still preserving its fishing heritage.",
+  monumentImg: "richibucto_monument.jpg",
+  coordinates: [46.6769, -64.8731] // Coordinates for Richibucto
+},
+{
+  city: "Riverside-Albert",
+  population: "Approximately 330",
+  demographics: "Median age: 49.2 years\nEnglish-speaking population: 89.5%\nFrench-speaking population: 9.4%",
+  industries: "Riverside-Albert's economy is primarily based on agriculture, forestry, tourism, and services. The community is known for its agricultural products, forestry resources, and tourism attractions such as Fundy National Park.",
+  economicInfo: "Agriculture plays a significant role in Riverside-Albert's economy, with crop farming and livestock production being key sectors. The forestry industry benefits from the surrounding forested areas, supporting sawmills and related businesses. Tourism contributes to the local economy due to the community's proximity to Fundy National Park and its scenic attractions.",
+  history: "Riverside-Albert has a history tied to agriculture and the exploitation of its natural resources. The community developed around the presence of fertile lands and timber resources. Over time, tourism has also become an important economic driver, attracting visitors to explore the natural beauty of the area.",
+  monumentImg: "riverside-albert_monument.jpg",
+  coordinates: [45.8051, -64.7926] // Coordinates for Riverside-Albert
+},
+{
+  city: "Rogersville",
+  population: "Approximately 1,200",
+  demographics: "Median age: 40.3 years\nEnglish-speaking population: 69.6%\nFrench-speaking population: 30.0%",
+  industries: "Rogersville's economy is diverse, with a focus on agriculture, forestry, manufacturing, and services. The community is known for its agricultural products, timber resources, and local businesses.",
+  economicInfo: "Agriculture, including crop farming and livestock production, plays a significant role in Rogersville's economy. The community benefits from its fertile lands and agricultural resources. The forestry industry, with its timber resources, supports employment and economic activity. Manufacturing and services, including healthcare and retail, also contribute to the local economy.",
+  history: "Rogersville's history is closely linked to agriculture and the timber industry. The community's fertile lands have supported farming activities, while its proximity to timber resources has driven the development of sawmills and related businesses. Over time, Rogersville has diversified its economy to include manufacturing and services.",
+  monumentImg: "rogersville_monument.jpg",
+  coordinates: [46.7812, -65.3889] // Coordinates for Rogersville
+},
+{
+  city: "St. Martins",
+  population: "Approximately 380",
+  demographics: "Median age: 55.5 years\nEnglish-speaking population: 95.3%\nFrench-speaking population: 3.2%",
+  industries: "St. Martins' economy is primarily based on tourism, fishing, arts and crafts, and services. The community is known for its scenic attractions, fishing heritage, and local artisans.",
+  economicInfo: "Tourism is a significant economic driver in St. Martins. The community's picturesque coastline, sea caves, and historic sites attract visitors throughout the year. Fishing, particularly lobster and seafood, also contributes to the local economy. St. Martins is known for its vibrant arts and crafts scene, with local artisans producing handmade goods. Services, including hospitality and retail, further support the local economy.",
+  history: "St. Martins has a history intertwined with its coastal location and maritime activities. The community's scenic beauty and natural attractions have drawn visitors for centuries. The fishing industry has been a staple of the local economy, while the arts and crafts sector has grown in recent years, showcasing the talents of local artisans.",
+  monumentImg: "st-martins_monument.jpg",
+  coordinates: [45.3994, -65.5401] // Coordinates for St. Martins
+},
+{
+  city: "Salisbury",
+  population: "Approximately 2,180",
+  demographics: "Median age: 39.5 years\nEnglish-speaking population: 97.2%\nFrench-speaking population: 2.0%",
+  industries: "Salisbury's economy is diverse, with a focus on agriculture, manufacturing, and services. The community is known for its agricultural products, local businesses, and manufacturing facilities.",
+  economicInfo: "Agriculture, including crop farming and livestock production, is an important sector in Salisbury's economy. The community benefits from its fertile lands and agricultural resources. Manufacturing, particularly in the industrial sector, contributes to employment and economic activity. Services, including healthcare, education, and retail, further support the local economy.",
+  history: "Salisbury's history is closely tied to agriculture and its strategic location along transportation routes. The community's fertile lands have supported farming activities, while its proximity to transportation corridors has facilitated trade and commerce. Over time, Salisbury has expanded its economic base to include manufacturing and services.",
+  monumentImg: "salisbury_monument.jpg",
+  coordinates: [45.9541, -64.0267] // Coordinates for Salisbury
+},
+{
+  city: "St. Leonard",
+  population: "Approximately 1,100",
+  demographics: "Median age: 47.2 years\nEnglish-speaking population: 55.9%\nFrench-speaking population: 43.6%",
+  industries: "St. Leonard's economy is primarily based on agriculture, forestry, manufacturing, and services. The community is known for its agricultural products, timber resources, and local businesses.",
+  economicInfo: "Agriculture, including crop farming and livestock production, plays a significant role in St. Leonard's economy. The community benefits from its fertile lands and agricultural resources. The forestry industry, with its timber resources, supports employment and economic activity. Manufacturing and services, including healthcare and retail, also contribute to the local economy.",
+  history: "St. Leonard has a history closely tied to agriculture and the timber industry. The community's fertile lands have supported farming activities, while its proximity to timber resources has driven the development of sawmills and related businesses. Over time, St. Leonard has diversified its economy to include manufacturing and services.",
+  monumentImg: "st-leonard_monument.jpg",
+  coordinates: [47.1731, -67.9158] // Coordinates for St. Leonard
+},
+{
+  city: "St. Martins",
+  population: "Approximately 380",
+  demographics: "Median age: 55.5 years\nEnglish-speaking population: 95.3%\nFrench-speaking population: 3.2%",
+  industries: "St. Martins' economy is primarily based on tourism, fishing, arts and crafts, and services. The community is known for its scenic attractions, fishing heritage, and local artisans.",
+  economicInfo: "Tourism is a significant economic driver in St. Martins. The community's picturesque coastline, sea caves, and historic sites attract visitors throughout the year. Fishing, particularly lobster and seafood, also contributes to the local economy. St. Martins is known for its vibrant arts and crafts scene, with local artisans producing handmade goods. Services, including hospitality and retail, further support the local economy.",
+  history: "St. Martins has a history intertwined with its coastal location and maritime activities. The community's scenic beauty and natural attractions have drawn visitors for centuries. The fishing industry has been a staple of the local economy, while the arts and crafts sector has grown in recent years, showcasing the talents of local artisans.",
+  monumentImg: "st-martins_monument.jpg",
+  coordinates: [45.3552, -65.5024] // Coordinates for St. Martins
+},
+{
+  city: "Sussex Corner",
+  population: "Approximately 1,200",
+  demographics: "Median age: 42.7 years\nEnglish-speaking population: 97.4%\nFrench-speaking population: 1.9%",
+  industries: "Sussex Corner's economy is diverse, with a focus on agriculture, manufacturing, and services. The community is known for its agricultural products, local businesses, and manufacturing facilities.",
+  economicInfo: "Agriculture, including crop farming and livestock production, plays a significant role in Sussex Corner's economy. The community benefits from its fertile lands and agricultural resources. The manufacturing sector includes various industries, such as food processing and small-scale manufacturing. Services, including healthcare, education, and retail, further support the local economy.",
+  history: "Sussex Corner's history is closely tied to agriculture and its strategic location along transportation routes. The community's fertile lands have supported farming activities, while its proximity to transportation corridors has facilitated trade and commerce. Over time, Sussex Corner has diversified its economic base to include manufacturing and services.",
+  monumentImg: "sussex-corner_monument.jpg",
+  coordinates: [45.7235, -65.5433] // Coordinates for Sussex Corner
+},
+{
+  city: "Tide Head",
+  population: "Approximately 690",
+  demographics: "Median age: 48.7 years\nEnglish-speaking population: 99.1%\nFrench-speaking population: 0.4%",
+  industries: "Tide Head's economy is primarily based on agriculture, forestry, and services. The community is known for its agricultural products and timber resources.",
+  economicInfo: "Agriculture, including crop farming and livestock production, plays a significant role in Tide Head's economy. The community benefits from its fertile lands and agricultural resources. The forestry industry, with its timber resources, supports employment and economic activity. Services, including healthcare and retail, also contribute to the local economy.",
+  history: "Tide Head's history is intertwined with agriculture and the exploitation of its natural resources. The community developed around the presence of fertile lands and timber resources. Over time, Tide Head has adapted to changing economic conditions while maintaining its focus on agriculture and forestry.",
+  monumentImg: "tide-head_monument.jpg",
+  coordinates: [48.0409, -66.4137] // Coordinates for Tide Head
+},
+{
+  city: "Woodstock",
+  population: "Approximately 5,200",
+  demographics: "Median age: 45.4 years\nEnglish-speaking population: 96.7%\nFrench-speaking population: 1.7%",
+  industries: "Woodstock's economy is diverse, with a focus on manufacturing, agriculture, and services. The community is known for its manufacturing facilities, agricultural products, and local businesses.",
+  economicInfo: "Woodstock's economy is driven by the manufacturing sector, including industries such as food processing, lumber, and metal fabrication. Agriculture, including crop farming and livestock production, is also significant. The services sector, including healthcare, education, and retail, further supports the local economy.",
+  history: "Woodstock's history is closely tied to its location along the Saint John River and its transportation routes. The community's access to natural resources and waterways facilitated early economic development. Over time, Woodstock has evolved into a regional economic center, attracting manufacturing and service-based industries.",
+  monumentImg: "woodstock_monument.jpg",
+  coordinates: [46.1571, -67.5769] // Coordinates for Woodstock
+},
+{
+  city: "Blackville",
+  population: "Approximately 800",
+  demographics: "Median age: 54.3 years\nEnglish-speaking population: 95.1%\nFrench-speaking population: 3.1%",
+  industries: "Blackville's economy is primarily based on forestry, agriculture, and services. The community is known for its timber resources, agricultural products, and local businesses.",
+  economicInfo: "Forestry plays a significant role in Blackville's economy, with the community benefiting from its proximity to timber resources and wood processing facilities. Agriculture, including crop farming and livestock production, also contributes to the local economy. Services, including healthcare and retail, further support economic activity in Blackville.",
+  history: "Blackville's history is closely tied to its location along the Southwest Miramichi River and its natural resources. The community developed around the timber industry and its accessibility to transportation routes. Over time, Blackville has maintained its focus on forestry and agriculture while adapting to changing economic conditions.",
+  monumentImg: "blackville_monument.jpg",
+  coordinates: [46.6552, -65.7392] // Coordinates for Blackville
+},
+{
+  city: "Cambridge-Narrows",
+  population: "Approximately 550",
+  demographics: "Median age: 50.9 years\nEnglish-speaking population: 97.6%\nFrench-speaking population: 1.1%",
+  industries: "Cambridge-Narrows' economy is diverse, with a focus on agriculture, tourism, and services. The community is known for its agricultural products, recreational activities, and local businesses.",
+  economicInfo: "Agriculture, including crop farming and livestock production, plays a significant role in Cambridge-Narrows' economy. The community benefits from its fertile lands and agricultural resources. Tourism is also important, with visitors attracted to the area's natural beauty, recreational activities, and cultural events. Services, including healthcare, hospitality, and retail, further support the local economy.",
+  history: "Cambridge-Narrows' history is closely tied to its location along the Washademoak Lake and its agricultural resources. The community developed around farming activities and its scenic surroundings. Over time, Cambridge-Narrows has embraced tourism as an economic driver, capitalizing on its natural attractions and outdoor recreational opportunities.",
+  monumentImg: "cambridge-narrows_monument.jpg",
+  coordinates: [45.7806, -66.1967] // Coordinates for Cambridge-Narrows
+},
+{
+  city: "Canterbury",
+  population: "Approximately 900",
+  demographics: "Median age: 49.8 years\nEnglish-speaking population: 98.3%\nFrench-speaking population: 0.9%",
+  industries: "Canterbury's economy is primarily based on agriculture, forestry, and services. The community is known for its agricultural products, timber resources, and local businesses.",
+  economicInfo: "Agriculture, including crop farming and livestock production, plays a significant role in Canterbury's economy. The community benefits from its fertile lands and agricultural resources. The forestry industry, with its timber resources, supports employment and economic activity. Services, including healthcare and retail, also contribute to the local economy.",
+  history: "Canterbury's history is intertwined with agriculture and the exploitation of its natural resources. The community developed around the presence of fertile lands and timber resources. Over time, Canterbury has adapted to changing economic conditions while maintaining its focus on agriculture and forestry.",
+  monumentImg: "canterbury_monument.jpg",
+  coordinates: [45.9241, -67.6328] // Coordinates for Canterbury
+},
+{
+  city: "Cap-Pelé",
+  population: "Approximately 2,400",
+  demographics: "Median age: 49.2 years\nEnglish-speaking population: 35.9%\nFrench-speaking population: 63.8%",
+  industries: "Cap-Pelé's economy is primarily based on fishing, seafood processing, tourism, and services. The community is known for its fishing industry, Acadian culture, and tourism attractions.",
+  economicInfo: "Cap-Pelé has a thriving fishing industry, with lobster fishing and seafood processing being key economic activities. The community's Acadian heritage and cultural tourism also contribute to the local economy, attracting visitors throughout the year. Services, including hospitality, retail, and healthcare, further support economic activity in Cap-Pelé.",
+  history: "Cap-Pelé's history is closely tied to its coastal location and the fishing industry. The community developed around the presence of abundant seafood resources and the establishment of fishing enterprises. Over time, Cap-Pelé has become known for its Acadian culture, with festivals, music, and traditional cuisine playing a significant role in the community's identity.",
+  monumentImg: "cap-pele_monument.jpg",
+  coordinates: [46.2154, -64.2349] // Coordinates for Cap-Pelé
+},
+{
+  city: "Hanwell",
+  population: "Approximately 5,100",
+  demographics: "Median age: 37.7 years\nEnglish-speaking population: 93.2%\nFrench-speaking population: 5.8%",
+  industries: "Hanwell's economy is diverse, with a focus on agriculture, manufacturing, and services. The community is known for its agricultural products, manufacturing facilities, and local businesses.",
+  economicInfo: "Agriculture plays a significant role in Hanwell's economy, with crop farming and livestock production contributing to local employment and revenue. The manufacturing sector also contributes to economic activity, with the presence of various production facilities. Services, including healthcare, education, and retail, further support the local economy.",
+  history: "Hanwell's history is intertwined with agriculture and its rural surroundings. The community developed around farming activities and its proximity to Fredericton. Over time, Hanwell has experienced residential growth and the expansion of its economic sectors, embracing both its rural and suburban characteristics.",
+  monumentImg: "hanwell_monument.jpg",
+  coordinates: [45.9313, -66.7854] // Coordinates for Hanwell
+},
+{
+  city: "Memramcook",
+  population: "Approximately 4,900",
+  demographics: "Median age: 40.5 years\nEnglish-speaking population: 10.3%\nFrench-speaking population: 88.9%",
+  industries: "Memramcook's economy is diverse, with a focus on agriculture, education, healthcare, and services. The community is known for its agricultural products, educational institutions, and local businesses.",
+  economicInfo: "Agriculture plays a significant role in Memramcook's economy, with crop farming and livestock production contributing to local employment and revenue. The community's educational institutions, such as the Université de Moncton and Collège communautaire du Nouveau-Brunswick, drive economic activity through education and research. Healthcare services, retail, and other service-oriented businesses further support the local economy.",
+  history: "Memramcook is a historically significant community with strong ties to Acadian culture and heritage. The community's history dates back centuries, and it played a vital role in the preservation of Acadian language, traditions, and customs. Today, Memramcook thrives as a vibrant community with a focus on education, culture, and agriculture.",
+  monumentImg: "memramcook_monument.jpg",
+  coordinates: [46.0139, -64.5256] // Coordinates for Memramcook
+},
+{
+  city: "Millville",
+  population: "Approximately 300",
+  demographics: "Median age: 52.2 years\nEnglish-speaking population: 95.4%\nFrench-speaking population: 4.6%",
+  industries: "Millville's economy is primarily based on agriculture, forestry, and services. The community is known for its agricultural products, timber resources, and local businesses.",
+  economicInfo: "Agriculture, including crop farming and livestock production, plays a significant role in Millville's economy. The community benefits from its fertile lands and agricultural resources. The forestry industry, with its timber resources, supports employment and economic activity. Services, including healthcare and retail, also contribute to the local economy.",
+  history: "Millville's history is closely tied to its rural and agricultural heritage. The community developed around farming activities and its natural surroundings. Over time, Millville has maintained its focus on agriculture and forestry while adapting to changing economic conditions.",
+  monumentImg: "millville_monument.jpg",
+  coordinates: [46.7103, -67.8498] // Coordinates for Millville
+},
+{
+  city: "Nigadoo",
+  population: "Approximately 1,100",
+  demographics: "Median age: 47.2 years\nEnglish-speaking population: 53.6%\nFrench-speaking population: 45.9%",
+  industries: "Nigadoo's economy is diverse, with a focus on agriculture, forestry, manufacturing, and services. The community is known for its agricultural products, lumber production, manufacturing facilities, and local businesses.",
+  economicInfo: "Agriculture plays a significant role in Nigadoo's economy, with crop farming and livestock production contributing to local employment and revenue. The forestry industry, with its timber resources, supports economic activity and provides employment opportunities. Manufacturing, including lumber production and other goods, further contributes to the local economy. Services, including healthcare, education, and retail, also support economic growth.",
+  history: "Nigadoo's history is intertwined with agriculture, forestry, and its location along the Bay of Chaleur. The community developed around farming activities and the utilization of timber resources. Over time, Nigadoo has diversified its economic sectors and embraced its natural surroundings, catering to both residents and visitors.",
+  monumentImg: "nigadoo_monument.jpg",
+  coordinates: [47.7231, -65.8174] // Coordinates for Nigadoo
+},
+{
+  city: "Petit-Rocher",
+  population: "Approximately 1,800",
+  demographics: "Median age: 50.1 years\nEnglish-speaking population: 58.6%\nFrench-speaking population: 41.4%",
+  industries: "Petit-Rocher's economy is diverse, with a focus on agriculture, forestry, manufacturing, and services. The community is known for its agricultural products, lumber production, manufacturing facilities, and local businesses.",
+  economicInfo: "Agriculture plays a significant role in Petit-Rocher's economy, with crop farming and livestock production contributing to local employment and revenue. The forestry industry, with its timber resources, supports economic activity and provides employment opportunities. Manufacturing, including lumber production and other goods, further contributes to the local economy. Services, including healthcare, education, and retail, also support economic growth.",
+  history: "Petit-Rocher's history is closely tied to its rural and coastal surroundings. The community developed around farming activities and the utilization of timber resources. Over time, Petit-Rocher has adapted to changing economic conditions and embraced its natural beauty, attracting both residents and visitors.",
+  monumentImg: "petit-rocher_monument.jpg",
+  coordinates: [47.7378, -65.8072] // Coordinates for Petit-Rocher
+},
+{
+  city: "Pointe-Verte",
+  population: "Approximately 1,200",
+  demographics: "Median age: 51.3 years\nEnglish-speaking population: 17.6%\nFrench-speaking population: 81.7%",
+  industries: "Pointe-Verte's economy is diverse, with a focus on agriculture, forestry, manufacturing, and services. The community is known for its agricultural products, lumber production, manufacturing facilities, and local businesses.",
+  economicInfo: "Agriculture plays a significant role in Pointe-Verte's economy, with crop farming and livestock production contributing to local employment and revenue. The forestry industry, with its timber resources, supports economic activity and provides employment opportunities. Manufacturing, including lumber production and other goods, further contributes to the local economy. Services, including healthcare, education, and retail, also support economic growth.",
+  history: "Pointe-Verte is a coastal community with a rich history. The community developed around fishing, agriculture, and the utilization of timber resources. Over time, Pointe-Verte has embraced its natural surroundings and developed a diverse economic base, catering to both residents and visitors.",
+  monumentImg: "pointe-verte_monument.jpg",
+  coordinates: [47.8291, -65.0738] // Coordinates for Pointe-Verte
+},
+{
+  city: "Port Elgin",
+  population: "Approximately 1,000",
+  demographics: "Median age: 47.3 years\nEnglish-speaking population: 88.9%\nFrench-speaking population: 11.1%",
+  industries: "Port Elgin's economy is diverse, with a focus on agriculture, manufacturing, services, and tourism. The community is known for its agricultural products, manufacturing facilities, local businesses, and its location near the Northumberland Strait.",
+  economicInfo: "Agriculture plays a significant role in Port Elgin's economy, with crop farming and livestock production contributing to local employment and revenue. The manufacturing sector, including food processing and other industries, supports economic activity and provides employment opportunities. Services, including healthcare, education, retail, and tourism-related businesses, further contribute to the local economy.",
+  history: "Port Elgin's history is intertwined with agriculture and its coastal setting. The community developed around farming activities and its proximity to the Northumberland Strait. Over time, Port Elgin has embraced its natural beauty, developed tourism opportunities, and diversified its economic sectors to meet the needs of residents and visitors.",
+  monumentImg: "port-elgin_monument.jpg",
+  coordinates: [46.0623, -64.0801] // Coordinates for Port Elgin
+},
+{
+ city: "Saint-Léolin",
+  population: "Approximately 900",
+  demographics: "Median age: 48.3 years\nEnglish-speaking population: 25.3%\nFrench-speaking population: 74.7%",
+  industries: "Saint-Léolin's economy is diverse, with a focus on agriculture, forestry, manufacturing, and services. The community is known for its agricultural products, lumber production, manufacturing facilities, and local businesses.",
+  economicInfo: "Agriculture plays a significant role in Saint-Léolin's economy, with crop farming and livestock production contributing to local employment and revenue. The forestry industry, with its timber resources, supports economic activity and provides employment opportunities. Manufacturing, including lumber production and other goods, further contributes to the local economy. Services, including healthcare, education, and retail, also support economic growth.",
+  history: "Saint-Léolin's history is closely tied to its rural surroundings and agricultural heritage. The community developed around farming activities and the utilization of timber resources. Over time, Saint-Léolin has adapted to changing economic conditions and continued to prioritize agriculture, forestry, and local businesses as part of its development.",
+  monumentImg: "saint-leolin_monument.jpg",
+  coordinates: [47.7859, -67.4087] // Coordinates for Saint-Léolin
+},
+{
+  city: "Stanley",
+  population: "Approximately 400",
+  demographics: "Median age: 49.3 years\nEnglish-speaking population: 61.7%\nFrench-speaking population: 37.6%",
+  industries: "Stanley's economy is primarily based on agriculture, forestry, and services. The community is known for its agricultural products, timber resources, and local businesses.",
+  economicInfo: "Agriculture plays a significant role in Stanley's economy, with crop farming and livestock production contributing to local employment and revenue. The forestry industry, with its timber resources, supports economic activity and provides employment opportunities. Services, including healthcare, education, and retail, also contribute to the local economy.",
+  history: "Stanley has a rural and agricultural history. The community developed around farming activities and the utilization of natural resources. Over time, Stanley has adapted to changing economic conditions while preserving its agricultural heritage and embracing its natural surroundings.",
+  monumentImg: "stanley_monument.jpg",
+  coordinates: [46.2006, -66.8613] // Coordinates for Stanley
+},
+{
+  city: "Upper Miramichi",
+  population: "Approximately 2,000",
+  demographics: "Median age: 47.1 years\nEnglish-speaking population: 95.8%\nFrench-speaking population: 3.7%",
+  industries: "Upper Miramichi's economy is diverse, with a focus on forestry, tourism, and services. The community is known for its timber resources, outdoor recreational opportunities, and local businesses.",
+  economicInfo: "The forestry industry plays a significant role in Upper Miramichi's economy, with timber harvesting and related activities contributing to local employment and revenue. Tourism also contributes to the local economy, with outdoor activities, such as fishing, hunting, and camping, attracting visitors. Services, including healthcare, education, and retail, support economic growth in the community.",
+  history: "Upper Miramichi has a rich history linked to the forestry industry and its natural surroundings. The community has embraced its natural beauty and developed a range of outdoor recreational opportunities, attracting both residents and tourists. The forestry sector has played a vital role in shaping the local economy and supporting employment.",
+  monumentImg: "upper-miramichi_monument.jpg",
+  coordinates: [46.4815, -66.0366] // Coordinates for Upper Miramichi
+},
+{
+  city: "Village-des-Poirier",
+  population: "Approximately 600",
+  demographics: "Median age: 45.8 years\nEnglish-speaking population: 13.2%\nFrench-speaking population: 85.9%",
+  industries: "Village-des-Poirier's economy is primarily based on agriculture, forestry, and services. The community is known for its agricultural products, timber resources, and local businesses.",
+  economicInfo: "Agriculture plays a significant role in Village-des-Poirier's economy, with crop farming and livestock production contributing to local employment and revenue. The forestry industry, with its timber resources, supports economic activity and provides employment opportunities. Services, including healthcare, education, and retail, also contribute to the local economy.",
+  history: "Village-des-Poirier has a rural and agricultural history. The community developed around farming activities and the utilization of natural resources. Over time, Village-des-Poirier has adapted to changing economic conditions while preserving its agricultural heritage and fostering community development.",
+  monumentImg: "village-des-poirier_monument.jpg",
+  coordinates: [47.6013, -68.5545] // Coordinates for Village-des-Poirier
+},
+{
+  city: "Haut-Madawaska",
+  population: "Approximately 2,400",
+  demographics: "Median age: 49.8 years\nEnglish-speaking population: 3.4%\nFrench-speaking population: 95.3%",
+  industries: "Haut-Madawaska's economy is diverse, with a focus on agriculture, forestry, manufacturing, and services. The community is known for its agricultural products, timber resources, manufacturing facilities, and local businesses.",
+  economicInfo: "Agriculture plays a significant role in Haut-Madawaska's economy, with crop farming and livestock production contributing to local employment and revenue. The forestry industry, with its timber resources, supports economic activity and provides employment opportunities. Manufacturing, including wood products and other goods, further contributes to the local economy. Services, including healthcare, education, and retail, also support economic growth.",
+  history: "Haut-Madawaska has a rural and agricultural history. The community developed around farming activities and the utilization of natural resources. Over time, Haut-Madawaska has adapted to changing economic conditions while preserving its agricultural heritage and fostering industrial and commercial development.",
+  monumentImg: "haut-madawaska_monument.jpg",
+  coordinates: [47.3466, -68.3493] // Coordinates for Haut-MadawPlease include this marker code in the appropriate place within your HTML code.
+}
+];
+      // Create markers
+      markers.forEach(function(marker) {
+        var markerObj = L.marker(marker.coordinates).addTo(map);
+
+        var popupContent =
+          '<div><h2>' + marker.city + '</h2>' +
+          '<p><strong>Population (as of 2021):</strong> ' + marker.population + '</p>' +
+          '<p><strong>Demographics (as of 2016 census):</strong><br>' + marker.demographics + '</p>' +
+          '<p><strong>Industries:</strong><br>' + marker.industries + '</p>' +
+          '<p><strong>Economic Information:</strong><br>' + marker.economicInfo + '</p>' +
+          '<p><strong>Brief History and Development:</strong><br>' + marker.history + '</p>' +
+          '<img src="' + marker.monumentImg + '" alt="' + marker.city + ' Monument" style="width:200px;height:150px;"></div>';
+
+        markerObj.bindPopup(popupContent);
+      });
+    }
+
+  </script>
+  <script>
+    // Load the map after the page has finished loading
+    window.addEventListener('load', function() {
+      initMap();
+    });
+  </script>
+</body>
+</html>
