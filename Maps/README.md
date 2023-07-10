@@ -1,5 +1,7 @@
 # Cities / Towns / Villages / Rural Communities
 
+[HTML Active Map](https://github.com/mikey506/NewBrunswick/blob/main/Maps/NB-Municipalities.html)
+
 **Cities:**
 
 Fredericton
